@@ -5,9 +5,10 @@ var LRUCache = function(capacity) {
   //doubly linked list + hashmap
   this.capacity = capacity;
   this.map = new Map();
-  this.head = null;
-  this.tail = null;
-  this.size = 0; // keep track of the size of capacity
+  this.head = {};
+  this.tail = {};
+  this.head.next = this.tail;
+  this.tail.prev = this.head;
 };
 
 /**
@@ -43,7 +44,7 @@ LRUCache.prototype.put = function(key, value) {
     this.map[key].value = value; //set the new value;
     this.remove(key);
   } else {
-    if (this.size >= this.capacity) {
+    if (this.size >this.capacity) {
       if (this.tail) {
         delete this.map[this.tail.key];
         this.size--;
