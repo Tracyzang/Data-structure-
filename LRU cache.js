@@ -44,7 +44,7 @@ LRUCache.prototype.put = function(key, value) {
     this.map[key].value = value; //set the new value;
     this.remove(key);
   } else {
-    if (this.size >this.capacity) {
+    if (this.size > this.capacity) {
       if (this.tail) {
         delete this.map[this.tail.key];
         this.size--;
