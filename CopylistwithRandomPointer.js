@@ -105,3 +105,51 @@ var isSymmetric = function(root) {
 
   return isMirror(root, root);
 };
+
+//reserve nodes in k-group
+function reverseKGroup(head, k) {
+  if (!head) return null;
+  var tail = head;
+  for (var i = 1; i < k; i++) {
+    tail = tail.next;
+    if (!tail) return head;
+  }
+  var next = tail.next;
+  tail.next = null;
+  reverse(head);
+  head.next = reverseKGroup(next, k);
+  return tail;
+}
+
+function reverse(curr) {
+  var prev = null;
+  while (curr) {
+    var next = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = next;
+  }
+  return prev;
+}
+
+function reverseKGroup(head, k) {
+  const stack = [],
+    preHead = new ListNode();
+  preHead.next = head;
+  let lastTail = preHead;
+  while (head) {
+    for (let i = 0; i < k && head; i++) {
+      stack.push(head);
+      head = head.next;
+    }
+    if (stack.length === k) {
+      while (stack.length > 0) {
+        lastTail.next = stack.pop();
+        lastTail = lastTail.next;
+      }
+      lastTail.next = head;
+    }
+  }
+
+  return preHead.next;
+}
